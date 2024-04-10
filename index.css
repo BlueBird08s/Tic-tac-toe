@@ -58,3 +58,10 @@ display: flex;
     border-radius: 1rem;
     
 }
+.bg{
+    background-color: white;
+}
+
+.bg2{
+    background-color: rgb(222, 184, 135);
+}

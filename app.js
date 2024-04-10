@@ -3,10 +3,26 @@ let resetBtn = document.querySelector("#reset-btn");
 let newGameBtn = document.querySelector("#new-game");
 let win = document.querySelector(".win");
 let cont2 = document.querySelector(".cont2");
-let container = document.querySelector(".container");
 let final = document.querySelector(".final");
 
 let turn0 = true;
+
+let count = 0;
+
+const countClick = () => {
+    boxes.forEach((box) => {
+        box.addEventListener("click",() => {
+            count = count + 1;
+            if(count == 9){
+                console.log("finish");
+            }
+        });
+
+    })
+
+}
+
+
 
 
 let winPatterns = [
@@ -23,19 +39,44 @@ let winPatterns = [
 const resetGame = () => {
     turn0 = true;
     enableBoxes();
+
+
 }
+
+const newGame = () => {
+    turn0 = true;
+    enableBoxes();
+
+boxes.forEach((box) => {
+        box.style.backgroundColor = "rgb(222, 184, 135)";
+    
+        })   
+
+}
+
+// const res = () => {
+    
+// }
+
 const enableBoxes = () => {
     for( let box of boxes){
         box.disabled = false;
+        
         box.innerText = "";
+        
+        
         cont2.classList.add("hide");
-        container.classList.remove("hide");
+
+
     }
 }
 
 
+
+
 boxes.forEach((box) => {
     box.addEventListener("click", () => {
+
         if(turn0){
             box.innerText ='0' ;
             turn0 = false;
@@ -47,25 +88,29 @@ boxes.forEach((box) => {
         box.disabled = true;
 
         checkWinner();
+        countClick();
     })
 })
 
 
 const checkWinner = () => {
     for (let pattern of winPatterns){
-        // console.log(boxes[pattern[0]].innerText, boxes[pattern[1]].innerText,boxes[pattern[2]].innerText);
         let pos1 = boxes[pattern[0]].innerText;
         let pos2 = boxes[pattern[1]].innerText;
         let pos3 = boxes[pattern[2]].innerText;
 
         if(pos1!="" && pos2!="" && pos3!=""){
-            if(pos1 === pos2 && pos2 === pos3){
+            if(pos1 === pos2 && pos2 === pos3){ 
+                boxes[pattern[0]].classList.add("bg");
+                boxes[pattern[1]].classList.add("bg");
+                boxes[pattern[2]].classList.add("bg");
                 winner(pos1);
             
             }
         }
     }
 }
+
 const disableBoxes = () => {
     for( let box of boxes){
         box.disabled = true;
@@ -75,12 +120,13 @@ const disableBoxes = () => {
 const winner = (winner) => {  
     final.innerText = `Congratulation, winner is ${winner}`;
     cont2.classList.remove("hide");
-    container.classList.add("hide");
     disableBoxes();
 }
 
 
+
+
 resetBtn.addEventListener("click", resetGame);
-newGameBtn.addEventListener("click", resetGame);
+newGameBtn.addEventListener("click", newGame);
 
 
